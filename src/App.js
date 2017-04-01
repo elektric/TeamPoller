@@ -14,13 +14,6 @@ const fb = firebase
 class App extends Component {
   constructor(props) {
       super(props);
-      // this.firebase = this.props.firebase;
-      // this.teams = [];
-      // var defaultStorage = this.firebase.storage();
-      // this.defaultDatabase = this.firebase.database();
-      // console.log(this.firebase.name);  // "[DEFAULT]"
-      // console.log(defaultStorage);
-      // console.log(this.defaultDatabase);
       this.state = {
           teams: [],
           suggestedTeamName: '',
@@ -33,33 +26,22 @@ class App extends Component {
         const store = snapshot.val();
         console.log('Snapshot', store.teams);
         this.setState({teams: store.teams});
-        // ReactDOM.render(
-        //   <App {...store} />,
-        //   document.getElementById('root')
-        // );
     });
   }
   render() {
     return (
       <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
-        </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
-        </p>
-        <input type="text" onChange={ this.handleTextEntered.bind(this) } />
-        <Button bsStyle="success" onClick={this.sendChoiceToDatabase.bind(this)}>Send to Database</Button>
         <Grid>
           <Row>
             <Col xs={6} xsOffset={3}>
-              <Panel className="TeamNameListPanel">
-                <TeamNameList names={this.state.teams}/>
+              <Panel className="TeamNameListPanel" header={(<h1>Team Name Suggestions</h1>)}>
+                <TeamNameList names={this.state.teams} clickEventHandler={this.updateChoiceCount.bind(this)}/>
               </Panel>
             </Col>
             </Row>
         </Grid>
+        <input type="text" onChange={ this.handleTextEntered.bind(this) } />
+        <Button bsStyle="success" onClick={this.sendChoiceToDatabase.bind(this)}>Suggest New Name</Button>
       </div>
     );
   }
@@ -69,7 +51,13 @@ class App extends Component {
   }
   sendChoiceToDatabase(clickEvent) {
       console.log('button clicked', this.state.suggestedTeamName);
-      fb.child('teams').push(this.state.suggestedTeamName, response => response);
+      fb.child('teams').push({'teamName': this.state.suggestedTeamName, 'votes': 0}, response => response);
+  }
+  updateChoiceCount(clickEvent) {
+      console.log('list item clicked', clickEvent);
+      //fb.child('teams/' + clickEvent + '/teamName').set("name of the thingy", response => response);
+      fb.child('teams/' + clickEvent + '/votes').set(3, response => response);
+      //fb.child('teams').push(this.state.suggestedTeamName, response => response);
   }
 }
 
