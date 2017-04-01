@@ -1,8 +1,8 @@
+import '../public/App.css';
 import React, { Component } from 'react';
 import {Button} from "react-bootstrap";
-import logo from './logo.svg';
-import './App.css';
-import TeamNameList from './TeamNameList.jsx'
+import logo from '../public/logo.svg';
+import TeamNameList from './components/home/TeamNameList.jsx'
 import * as firebase from 'firebase';
 var config = require('../secure/config.json');
 const fb = firebase
