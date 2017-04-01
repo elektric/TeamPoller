@@ -1,6 +1,6 @@
 import '../public/App.css';
 import React, { Component } from 'react';
-import {Button} from "react-bootstrap";
+import {Button, Panel, Grid, Row, Col} from "react-bootstrap";
 import logo from '../public/logo.svg';
 import TeamNameList from './components/home/TeamNameList.jsx'
 import * as firebase from 'firebase';
@@ -49,9 +49,17 @@ class App extends Component {
         <p className="App-intro">
           To get started, edit <code>src/App.js</code> and save to reload.
         </p>
-        <TeamNameList names={this.state.teams}/>
         <input type="text" onChange={ this.handleTextEntered.bind(this) } />
         <Button bsStyle="success" onClick={this.sendChoiceToDatabase.bind(this)}>Send to Database</Button>
+        <Grid>
+          <Row>
+            <Col xs={6} xsOffset={3}>
+              <Panel className="TeamNameListPanel">
+                <TeamNameList names={this.state.teams}/>
+              </Panel>
+            </Col>
+            </Row>
+        </Grid>
       </div>
     );
   }
