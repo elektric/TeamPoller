@@ -12,8 +12,8 @@ export default (props) => {
                 <Increment handleClick={props.incrementCount}/>
             </span>
             <div style={{textAlign: 'center'}}>
-                <div>TeamName: {props.teamName}</div>
-                <div>Votes: {props.votes}</div>    
+                <div>{props.teamName}</div>
+                <div>{props.votes}</div>
             </div>
         </div>
     );

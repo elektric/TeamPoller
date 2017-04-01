@@ -51,12 +51,24 @@ class App extends Component {
   }
   sendChoiceToDatabase(clickEvent) {
       console.log('button clicked', this.state.suggestedTeamName);
-      fb.child('teams').push({'teamName': this.state.suggestedTeamName, 'votes': 0}, response => response);
+      fb.child('teams').push({'teamName': this.state.suggestedTeamName, 'votes': 1}, response => response);
   }
-  updateChoiceCount(clickEvent) {
-      console.log('list item clicked', clickEvent);
+  updateChoiceCount(property, action) {
+      console.log('list item clicked', property, action);
       //fb.child('teams/' + clickEvent + '/teamName').set("name of the thingy", response => response);
-      fb.child('teams/' + clickEvent[0] + '/votes').set(++clickEvent[1], response => response);
+      console.log(property, this.state.teams)
+      switch(action){
+        case 'decrement':
+          if (this.state.teams[property].votes > 0){
+            fb.child('teams/' + property + '/votes').set(--this.state.teams[property].votes, response => response);
+          }
+          break;
+        case 'increment':
+          fb.child('teams/' + property + '/votes').set(++this.state.teams[property].votes, response => response);
+          break;
+
+      }
+
       //fb.child('teams').push(this.state.suggestedTeamName, response => response);
   }
 }

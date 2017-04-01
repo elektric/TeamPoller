@@ -8,14 +8,14 @@ export default (props) => {
     for (let property in props.names) {
         console.log(property, '=', props.names[property].teamName, props.names[property].votes);
         const incrementCount = (e) => {
-            props.clickEventHandler([property, props.names[property].votes])
+            props.clickEventHandler(property, 'increment')
         }
         const decrementCount = (e) => {
-            props.clickEventHandler([property, props.names[property].votes]);
+            props.clickEventHandler(property, 'decrement');
         }
         nameList.push(
             <ListGroupItem key={property}>
-                <TeamName 
+                <TeamName
                     incrementCount={incrementCount}
                     decrementCount={decrementCount}
                     teamName={props.names[property].teamName}
