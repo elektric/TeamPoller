@@ -1,6 +1,6 @@
 import React from "react";
 import {ListGroup, ListGroupItem} from 'react-bootstrap';
-
+import TeamNameList from './TeamNameList';
 
 export default (props) => {
 
@@ -11,11 +11,16 @@ export default (props) => {
             props.clickEventHandler([property, props.names[property].votes])
         }
         nameList.push(
+<<<<<<< Updated upstream
             <ListGroupItem key={property} onClick={updateCount}>
                 <div>
                     <div>{props.names[property].teamName}</div>
                     <div>{props.names[property].votes}</div>
                 </div>
+=======
+            <ListGroupItem key={property}>
+                <TeamNameList keyId={property} teamName={props.names[property]} />
+>>>>>>> Stashed changes
             </ListGroupItem>
         );
     }
