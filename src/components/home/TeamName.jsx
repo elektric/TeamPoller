@@ -5,10 +5,16 @@ import Decrement from '../common/buttons/Decrement';
 export default (props) => {
     return (
         <div>
-            <span style={{float: 'left'}}>+</span>
-            <span style={{float: 'right'}}>-</span>
-            <span>TeamName: {props.teamName}</span>
-            <div>{props.keyId}</div>    
+            <span style={{float: 'left'}}>
+                <Decrement handleClick={props.decrementCount}/>
+            </span>
+            <span style={{float: 'right'}}>
+                <Increment handleClick={props.incrementCount}/>
+            </span>
+            <div style={{textAlign: 'center'}}>
+                <div>TeamName: {props.teamName}</div>
+                <div>Votes: {props.votes}</div>    
+            </div>
         </div>
     );
 };

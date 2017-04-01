@@ -1,7 +1,7 @@
 import '../public/App.css';
 import React, { Component } from 'react';
 import {Button, Panel, Grid, Row, Col} from "react-bootstrap";
-import logo from '../public/logo.svg';
+// import logo from '../public/logo.svg';
 import TeamNameList from './components/home/TeamNameList.jsx'
 import * as firebase from 'firebase';
 var config = require('../secure/config.json');
