@@ -56,7 +56,7 @@ class App extends Component {
   updateChoiceCount(clickEvent) {
       console.log('list item clicked', clickEvent);
       //fb.child('teams/' + clickEvent + '/teamName').set("name of the thingy", response => response);
-      fb.child('teams/' + clickEvent + '/votes').set(3, response => response);
+      fb.child('teams/' + clickEvent[0] + '/votes').set(++clickEvent[1], response => response);
       //fb.child('teams').push(this.state.suggestedTeamName, response => response);
   }
 }

@@ -8,7 +8,7 @@ export default (props) => {
     for (let property in props.names) {
         console.log(property, '=', props.names[property].teamName, props.names[property].votes);
         const updateCount = (e) => {
-            props.clickEventHandler(property)
+            props.clickEventHandler([property, props.names[property].votes])
         }
         nameList.push(
             <ListGroupItem key={property} onClick={updateCount}>
