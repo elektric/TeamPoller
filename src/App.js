@@ -98,7 +98,7 @@ class App extends Component {
       <div className="App">
         <Grid>
           <Row>
-            <Col xs={6} xsOffset={3}>
+            <Col xs={12} lOffset={3}>
               <Panel className="TeamNameListPanel" header={(<h1>Team Name Suggestions</h1>)}>
                 <TeamNameList names={this.state.teams} clickEventHandler={this.updateChoiceCount.bind(this)}/>
               </Panel>
