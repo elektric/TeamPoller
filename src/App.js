@@ -1,4 +1,7 @@
 import '../public/App.css';
+
+
+//import '../public/bootstrap.css';
 import React, { Component } from 'react';
 import {Button, Panel, Grid, Row, Col} from "react-bootstrap";
 import TeamNameList from './components/home/TeamNameList.jsx';
@@ -12,9 +15,6 @@ const fb = firebase
 
 
 //sample data
-
-
-
 class App extends Component {
   constructor(props) {
       super(props);
@@ -26,18 +26,18 @@ class App extends Component {
             labels: [],
             datasets: [
               {
-                label: 'Number of Votes',
-                backgroundColor: 'rgba(255,99,132,0.2)',
-                borderColor: 'rgba(255,99,132,1)',
-                borderWidth: 1,
-                hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-                hoverBorderColor: 'rgba(255,99,132,1)',
+                label: 'Total Votes',
+                backgroundColor: 'rgba(123, 18, 229, 0.2)',
+                borderColor: 'rgba(123, 18, 229, 1)',
+                borderWidth: 3,
+                hoverBackgroundColor: 'rgba(229, 18, 229, 0.2)',
+                hoverBorderColor: 'rgba(229, 18, 229, 1)',
                 data: []
               }
             ]
           },
           options: {
-            maintainAspectRatio: false,
+            maintainAspectRatio: true,
             scales: {
               yAxes: [{
                   display: true,
@@ -84,7 +84,7 @@ class App extends Component {
       console.log("updating chart", this.state)
       chartDisplay = (
         <div>
-          <h2>Votes for Team Name</h2>
+          <h2 className="voteHeader">Votes for Team Name</h2>
           <Bar
             data={this.state.data}
             width={500}
@@ -103,11 +103,23 @@ class App extends Component {
                 <TeamNameList names={this.state.teams} clickEventHandler={this.updateChoiceCount.bind(this)}/>
               </Panel>
             </Col>
-            </Row>
+          </Row>
+          <Row>
+            <Col xs={6} xsOffset={3}>
+              <input className="form-control" type="text" placeholder="Enter New Team Name" onChange={ this.handleTextEntered.bind(this) } />
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={6} xsOffset={3}>
+              <Button className="btn btn-default" onClick={this.sendChoiceToDatabase.bind(this)}>Suggest New Name</Button>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12} xsOffset={0}>
+              {chartDisplay}
+            </Col>
+          </Row>
         </Grid>
-        <input type="text" onChange={ this.handleTextEntered.bind(this) } />
-        <Button bsStyle="success" onClick={this.sendChoiceToDatabase.bind(this)}>Suggest New Name</Button>
-          {chartDisplay}
       </div>
     );
   }
