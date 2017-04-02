@@ -6,9 +6,9 @@ export default (props) => {
 
     let nameList = [];
     for (let property in props.names) {
-        console.log(property, '=', props.names[property].teamName, props.names[property].votes);
+        //console.log(property, '=', props.names[property].teamName, props.names[property].votes);
         const incrementCount = (e) => {
-            props.clickEventHandler(property, 'increment')
+            props.clickEventHandler(property, 'increment');
         }
         const decrementCount = (e) => {
             props.clickEventHandler(property, 'decrement');

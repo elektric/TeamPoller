@@ -1,14 +1,18 @@
 import '../public/App.css';
 import React, { Component } from 'react';
 import {Button, Panel, Grid, Row, Col} from "react-bootstrap";
-// import logo from '../public/logo.svg';
-import TeamNameList from './components/home/TeamNameList.jsx'
+import TeamNameList from './components/home/TeamNameList.jsx';
 import * as firebase from 'firebase';
+import {Bar} from 'react-chartjs-2';
 var config = require('../secure/config.json');
 const fb = firebase
   .initializeApp(config)
   .database()
   .ref();
+
+
+//sample data
+
 
 
 class App extends Component {
@@ -17,18 +21,79 @@ class App extends Component {
       this.state = {
           teams: [],
           suggestedTeamName: '',
+          hasData: false,
+          data: {
+            labels: [],
+            datasets: [
+              {
+                label: 'Number of Votes',
+                backgroundColor: 'rgba(255,99,132,0.2)',
+                borderColor: 'rgba(255,99,132,1)',
+                borderWidth: 1,
+                hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+                hoverBorderColor: 'rgba(255,99,132,1)',
+                data: []
+              }
+            ]
+          },
+          options: {
+            maintainAspectRatio: false,
+            scales: {
+              yAxes: [{
+                  display: true,
+                  ticks: {
+                      suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                      // OR //
+                      beginAtZero: true   // minimum value will be 0.
+                  }
+              }],
+          },
+        },
       };
     }
   componentWillMount() {
 
 
     fb.on('value', snapshot => {
+        console.log("data before: ", this.state.data.datasets[0].data);
         const store = snapshot.val();
-        console.log('Snapshot', store.teams);
-        this.setState({teams: store.teams});
+        //console.log('Snapshot', store.teams);
+        let teamNames = [];
+        let votes = [];
+        for (let property in store.teams)
+        {
+          //console.log("willmountData", '=', "value=", store.teams[property], "propery= ", property);
+          teamNames.push(store.teams[property].teamName);
+          votes.push(store.teams[property].votes);
+        }
+
+
+        let datasets = this.state.data.datasets.slice();
+        datasets[0].data = votes;
+        let data = Object.assign({}, this.state.data, { datasets: datasets, labels: teamNames});
+        this.setState(Object.assign({}, this.state, {teams: store.teams, data: data, hasData: true}));
+        console.log("data After: ", this.state.data.datasets[0].data);
+
+
     });
   }
   render() {
+    let chartDisplay = null;
+    if(this.state.hasData)
+    {
+      console.log("updating chart", this.state)
+      chartDisplay = (
+        <div>
+          <h2>Votes for Team Name</h2>
+          <Bar
+            data={this.state.data}
+            width={500}
+            height={200}
+            options={this.state.options}
+          />
+        </div>
+      );
+    }
     return (
       <div className="App">
         <Grid>
@@ -42,6 +107,7 @@ class App extends Component {
         </Grid>
         <input type="text" onChange={ this.handleTextEntered.bind(this) } />
         <Button bsStyle="success" onClick={this.sendChoiceToDatabase.bind(this)}>Suggest New Name</Button>
+          {chartDisplay}
       </div>
     );
   }
@@ -54,9 +120,9 @@ class App extends Component {
       fb.child('teams').push({'teamName': this.state.suggestedTeamName, 'votes': 1}, response => response);
   }
   updateChoiceCount(property, action) {
-      console.log('list item clicked', property, action);
+
       //fb.child('teams/' + clickEvent + '/teamName').set("name of the thingy", response => response);
-      console.log(property, this.state.teams)
+      //console.log(property, this.state.teams)
       switch(action){
         case 'decrement':
           if (this.state.teams[property].votes > 0){
@@ -65,6 +131,9 @@ class App extends Component {
           break;
         case 'increment':
           fb.child('teams/' + property + '/votes').set(++this.state.teams[property].votes, response => response);
+          break;
+        default:
+          console.log("illegal operation: ", action);
           break;
 
       }
