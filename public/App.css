@@ -14,6 +14,10 @@
   color: white;
 }
 
+.team-name-input {
+  text-align: center;
+}
+
 .voteHeader {
   color: rgba(123, 18, 229, 1);
 }

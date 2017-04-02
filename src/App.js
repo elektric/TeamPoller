@@ -98,24 +98,24 @@ class App extends Component {
       <div className="App">
         <Grid>
           <Row>
-            <Col xs={12} lOffset={3}>
+            <Col xs={12} lg={6} lgOffset={3}>
               <Panel className="TeamNameListPanel" header={(<h1>Team Name Suggestions</h1>)}>
                 <TeamNameList names={this.state.teams} clickEventHandler={this.updateChoiceCount.bind(this)}/>
               </Panel>
             </Col>
           </Row>
           <Row>
-            <Col xs={6} xsOffset={3}>
-              <input className="form-control" type="text" placeholder="Enter New Team Name" onChange={ this.handleTextEntered.bind(this) } />
+            <Col xs={12} lg={6} lgOffset={3}>
+              <input className="form-control team-name-input" type="text" placeholder="Enter New Team Name" onChange={ this.handleTextEntered.bind(this) } />
             </Col>
           </Row>
           <Row>
-            <Col xs={6} xsOffset={3}>
+            <Col xs={12} lg={6} lgOffset={3}>
               <Button className="btn btn-default" onClick={this.sendChoiceToDatabase.bind(this)}>Suggest New Name</Button>
             </Col>
           </Row>
           <Row>
-            <Col xs={12} xsOffset={0}>
+            <Col xs={12}>
               {chartDisplay}
             </Col>
           </Row>
