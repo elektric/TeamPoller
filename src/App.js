@@ -10,8 +10,8 @@ import {Bar, Pie, HorizontalBar, defaults} from 'react-chartjs-2';
 var config = require('../secure/config.json');
 
 
-defaults.global.defaultFontColor = 'rgba(123, 18, 229, 1)';
-defaults.global.defaultFontSize = 16;
+defaults.global.defaultFontColor = 'rgba(255, 255, 255, .8)';
+defaults.global.defaultFontSize = 18;
 const fb = firebase
   .initializeApp(config)
   .database()
@@ -32,7 +32,7 @@ class App extends Component {
               {
                 label: 'Total Votes',
                 backgroundColor: 'rgba(123, 18, 229, 0.2)',
-                borderColor: 'rgba(123, 18, 229, 1)',
+                borderColor: 'rgba(255, 255, 255, 8)',
                 borderWidth: 3,
                 hoverBackgroundColor: 'rgba(229, 18, 229, 0.2)',
                 hoverBorderColor: 'rgba(229, 18, 229, 1)',
@@ -85,13 +85,29 @@ class App extends Component {
         //console.log('Snapshot', store.teams);
         let teamNames = [];
         let votes = [];
+        let zipped = []; //used for sorting the array
         for (let property in store.teams)
         {
           //console.log("willmountData", '=', "value=", store.teams[property], "propery= ", property);
-          teamNames.push(store.teams[property].teamName);
-          votes.push(store.teams[property].votes);
+          //teamNames.push(store.teams[property].teamName);
+          //votes.push(store.teams[property].votes);
+          zipped.push({teamName: store.teams[property].teamName, votes: store.teams[property].votes})
         }
 
+        //Sort the array
+        zipped.sort(function (x, y)
+        {
+            return y.votes - x.votes;
+        });
+
+        // unzip
+        var z;
+        for (var i=0; i<zipped.length; i++)
+        {
+            z = zipped[i];
+            teamNames[i] = z.teamName;
+            votes[i] = z.votes;
+        }
 
         let datasets = this.state.data.datasets.slice();
         datasets[0].data = votes;
@@ -110,10 +126,10 @@ class App extends Component {
       chartDisplay = (
         <div>
           <h2 className="voteHeader">Votes for Team Name</h2>
-          <HorizontalBar
+          <Bar
             data={this.state.data}
             width={500}
-            height={200}
+            height={300}
             options={this.state.options}
           />
         </div>
@@ -122,6 +138,11 @@ class App extends Component {
     return (
       <div className="App">
         <Grid>
+          <Row>
+            <Col xs={12}>
+              {chartDisplay}
+            </Col>
+          </Row>
           <Row>
             <Col xs={12} lg={8} lgOffset={2}>
               <Panel className="TeamNameListPanel" header={(<h1>Team Name Suggestions</h1>)}>
@@ -137,11 +158,6 @@ class App extends Component {
           <Row>
             <Col xs={12} lg={6} lgOffset={3}>
               <Button className="btn btn-primary team-name-input" onClick={this.sendChoiceToDatabase.bind(this)}>Suggest New Name</Button>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              {chartDisplay}
             </Col>
           </Row>
         </Grid>
