@@ -6,7 +6,7 @@ import React, { Component } from 'react';
 import {Button, Panel, Grid, Row, Col} from "react-bootstrap";
 import TeamNameList from './components/home/TeamNameList.jsx';
 import * as firebase from 'firebase';
-import {Bar} from 'react-chartjs-2';
+import {Bar, Pie, HorizontalBar} from 'react-chartjs-2';
 var config = require('../secure/config.json');
 const fb = firebase
   .initializeApp(config)
@@ -38,13 +38,24 @@ class App extends Component {
           },
           options: {
             maintainAspectRatio: true,
+            legend: {
+              display: false
+            },
             scales: {
               yAxes: [{
                   display: true,
                   ticks: {
                       suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
                       // OR //
-                      beginAtZero: true   // minimum value will be 0.
+                      //beginAtZero: true   // minimum value will be 0.
+                  }
+              }],
+              xAxes: [{
+                  display: true,
+                  ticks: {
+                      suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
+                      // OR //
+                      //beginAtZero: true   // minimum value will be 0.
                   }
               }],
           },
@@ -85,7 +96,7 @@ class App extends Component {
       chartDisplay = (
         <div>
           <h2 className="voteHeader">Votes for Team Name</h2>
-          <Bar
+          <HorizontalBar
             data={this.state.data}
             width={500}
             height={200}
@@ -98,20 +109,20 @@ class App extends Component {
       <div className="App">
         <Grid>
           <Row>
-            <Col xs={12} lg={6} lgOffset={3}>
+            <Col xs={12} lg={8} lgOffset={2}>
               <Panel className="TeamNameListPanel" header={(<h1>Team Name Suggestions</h1>)}>
                 <TeamNameList names={this.state.teams} clickEventHandler={this.updateChoiceCount.bind(this)}/>
               </Panel>
             </Col>
           </Row>
           <Row>
-            <Col xs={12} lg={6} lgOffset={3}>
+            <Col xs={10} xsOffset={1} lg={6} lgOffset={3}>
               <input className="form-control team-name-input" type="text" placeholder="Enter New Team Name" onChange={ this.handleTextEntered.bind(this) } />
             </Col>
           </Row>
           <Row>
             <Col xs={12} lg={6} lgOffset={3}>
-              <Button className="btn btn-default" onClick={this.sendChoiceToDatabase.bind(this)}>Suggest New Name</Button>
+              <Button className="btn btn-primary team-name-input" onClick={this.sendChoiceToDatabase.bind(this)}>Suggest New Name</Button>
             </Col>
           </Row>
           <Row>

@@ -3176,8 +3176,8 @@ fieldset[disabled] .btn-primary.focus {
 }
 .btn-success {
   color: #ffffff;
-  background-color: #00bc8c;
-  border-color: #00bc8c;
+  background-color: rgba(0, 82, 14, 0.88);
+  border-color: rgba(0, 82, 14, 0.88);
 }
 .btn-success:focus,
 .btn-success.focus {
@@ -3347,8 +3347,8 @@ fieldset[disabled] .btn-warning.focus {
 }
 .btn-danger {
   color: #ffffff;
-  background-color: #e74c3c;
-  border-color: #e74c3c;
+  background-color: rgba(172, 36, 21, 0.92);
+  border-color: rgba(172, 36, 21, 0.1);
 }
 .btn-danger:focus,
 .btn-danger.focus {
