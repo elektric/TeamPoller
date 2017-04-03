@@ -6,8 +6,12 @@ import React, { Component } from 'react';
 import {Button, Panel, Grid, Row, Col} from "react-bootstrap";
 import TeamNameList from './components/home/TeamNameList.jsx';
 import * as firebase from 'firebase';
-import {Bar, Pie, HorizontalBar} from 'react-chartjs-2';
+import {Bar, Pie, HorizontalBar, defaults} from 'react-chartjs-2';
 var config = require('../secure/config.json');
+
+
+defaults.global.defaultFontColor = 'rgba(123, 18, 229, 1)';
+defaults.global.defaultFontSize = 16;
 const fb = firebase
   .initializeApp(config)
   .database()
@@ -38,12 +42,18 @@ class App extends Component {
           },
           options: {
             maintainAspectRatio: true,
+            response: true,
             legend: {
               display: false
             },
+
             scales: {
               yAxes: [{
                   display: true,
+                  gridLines:{
+                    //color:"rgba(255,255,255,0.1)",
+                    //zeroLineColor:"rgba(255,255,255,0.2)"
+                  },
                   ticks: {
                       suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
                       // OR //
@@ -52,6 +62,10 @@ class App extends Component {
               }],
               xAxes: [{
                   display: true,
+                  gridLines:{
+                    //color:"rgba(255,255,255,0.2)",
+                    zeroLineColor:"rgba(255,255,255,0.5)"
+                  },
                   ticks: {
                       suggestedMin: 0,    // minimum will be 0, unless there is a lower value.
                       // OR //
