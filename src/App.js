@@ -26,6 +26,8 @@ class App extends Component {
           teams: [],
           suggestedTeamName: '',
           hasData: false,
+          teamSlogan: 'not provided',
+          logoURL: 'not provided',
           data: {
             labels: [],
             datasets: [
@@ -144,19 +146,21 @@ class App extends Component {
             </Col>
           </Row>
           <Row>
-            <Col xs={12} lg={8} lgOffset={2}>
+            <Col xs={8} xsOffset={2} lg={8} lgOffset={2}>
               <Panel className="TeamNameListPanel" header={(<h1>Team Name Suggestions</h1>)}>
                 <TeamNameList names={this.state.teams} clickEventHandler={this.updateChoiceCount.bind(this)}/>
               </Panel>
             </Col>
           </Row>
           <Row>
-            <Col xs={10} xsOffset={1} lg={6} lgOffset={3}>
-              <input className="form-control team-name-input" type="text" placeholder="Enter New Team Name" onChange={ this.handleTextEntered.bind(this) } />
+            <Col xs={6} xsOffset={3} lg={6} lgOffset={3}>
+              <input className="form-control team-name-input" type="text" placeholder="Enter New Team Name" onChange={ this.handleTeamEntered.bind(this) } />
+              <input className="form-control team-name-input" type="text" placeholder="Enter Team Slogan" onChange={ this.handleSloganEntered.bind(this) } />
+              <input className="form-control team-name-input" type="text" placeholder="Enter Logo URL" onChange={ this.handleUrlEntered.bind(this) } />
             </Col>
           </Row>
           <Row>
-            <Col xs={12} lg={6} lgOffset={3}>
+            <Col xs={6} xsOffset={3} lg={6} lgOffset={3}>
               <Button className="btn btn-primary team-name-input" onClick={this.sendChoiceToDatabase.bind(this)}>Suggest New Name</Button>
             </Col>
           </Row>
@@ -165,12 +169,25 @@ class App extends Component {
     );
   }
 
-  handleTextEntered(e){
+  handleTeamEntered(e){
     this.setState({suggestedTeamName: e.target.value});
   }
+
+  handleSloganEntered(e){
+    this.setState({teamSlogan: e.target.value});
+  }
+
+  handleUrlEntered(e){
+    this.setState({logoURL: e.target.value});
+  }
+
   sendChoiceToDatabase(clickEvent) {
       console.log('button clicked', this.state.suggestedTeamName);
-      fb.child('teams').push({'teamName': this.state.suggestedTeamName, 'votes': 1}, response => response);
+      fb.child('teams').push({'teamName': this.state.suggestedTeamName,
+                              'votes': 1,
+                              'slogan': this.state.teamSlogan,
+                              'logoURL': this.state.logoURL},
+                              response => response);
   }
   updateChoiceCount(property, action) {
 

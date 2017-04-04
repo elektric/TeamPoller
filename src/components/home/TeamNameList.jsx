@@ -19,7 +19,10 @@ export default (props) => {
                     incrementCount={incrementCount}
                     decrementCount={decrementCount}
                     teamName={props.names[property].teamName}
-                    votes={props.names[property].votes} />
+                    votes={props.names[property].votes}
+                    slogan={props.names[property].slogan}
+                    logoURL={props.names[property].logoURL}
+                     />
             </ListGroupItem>
         );
     }
