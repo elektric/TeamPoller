@@ -27,8 +27,8 @@ export default (props) => {
           <Row>
             <Col xs={2} lg={2} lgOffset={0}>
                 <Decrement handleClick={props.decrementCount}/>
-                <div>Slogan:</div>
-                <div>{props.slogan}</div>
+                <h4>Slogan</h4>
+                <h3>{props.slogan}</h3>
             </Col>
 
             <Col xs={3} lg={3} lgOffset={0}>
@@ -38,8 +38,8 @@ export default (props) => {
 
             <Col xs={2} lg={2} lgOffset={0}>
               <Increment handleClick={props.incrementCount}/>
-              <div>Number of Votes:</div>
-              <div>{props.votes}</div>
+              <h4>Votes</h4>
+              <h1>{props.votes}</h1>
             </Col>
 
           </Row>
