@@ -129,7 +129,7 @@ class App extends Component {
 
       chartDisplay = (
         <div>
-          <Button bsSize="default" onClick={ ()=> this.setState({ chartIsOpen: !this.state.chartIsOpen })}>
+          <Button bsSize="sm" onClick={ ()=> this.setState({ chartIsOpen: !this.state.chartIsOpen })}>
              <Glyphicon glyph="chevron-down" />
            </Button>
            <Panel collapsible expanded={this.state.chartIsOpen}>
