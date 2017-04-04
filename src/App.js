@@ -171,7 +171,7 @@ class App extends Component {
           </Row>
           <Row>
             <Col xs={6} xsOffset={3} lg={6} lgOffset={3}>
-              <Button className="btn btn-primary team-name-input" onClick={this.sendChoiceToDatabase.bind(this)}>Suggest New Name</Button>
+              <Button className="btn btn-success team-name-input" onClick={this.sendChoiceToDatabase.bind(this)}><h4>Submit New Name</h4></Button>
             </Col>
           </Row>
         </Grid>
