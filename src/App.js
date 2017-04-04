@@ -3,7 +3,7 @@ import '../public/App.css';
 
 //import '../public/bootstrap.css';
 import React, { Component } from 'react';
-import {Button, Panel, Grid, Row, Col} from "react-bootstrap";
+import {Button, Panel, Grid, Row, Col, Glyphicon} from "react-bootstrap";
 import TeamNameList from './components/home/TeamNameList.jsx';
 import * as firebase from 'firebase';
 import {Bar, Pie, HorizontalBar, defaults} from 'react-chartjs-2';
@@ -28,6 +28,7 @@ class App extends Component {
           hasData: false,
           teamSlogan: 'not provided',
           logoURL: 'not provided',
+          chartIsOpen: true,
           data: {
             labels: [],
             datasets: [
@@ -124,30 +125,39 @@ class App extends Component {
     let chartDisplay = null;
     if(this.state.hasData)
     {
-      console.log("updating chart", this.state)
+      //console.log("updating chart", this.state)
+
       chartDisplay = (
         <div>
-          <h2 className="voteHeader">Votes for Team Name</h2>
-          <Bar
-            data={this.state.data}
-            width={500}
-            height={300}
-            options={this.state.options}
-          />
-        </div>
+          <Button bsSize="default" onClick={ ()=> this.setState({ chartIsOpen: !this.state.chartIsOpen })}>
+             <Glyphicon glyph="chevron-down" />
+           </Button>
+           <Panel collapsible expanded={this.state.chartIsOpen}>
+             <div>
+               <h2 className="voteHeader">Votes for Team Name</h2>
+               <Bar
+                 data={this.state.data}
+                 width={800}
+                 height={350}
+                 options={this.state.options}
+               />
+             </div>
+           </Panel>
+         </div>
+
       );
     }
     return (
       <div className="App">
         <Grid>
-          <Row>
+          <Row className="AppLeft">
             <Col xs={12}>
               {chartDisplay}
             </Col>
           </Row>
           <Row>
             <Col xs={8} xsOffset={2} lg={8} lgOffset={2}>
-              <Panel className="TeamNameListPanel" header={(<h1>Team Name Suggestions</h1>)}>
+              <Panel className="TeamNameListPanel">
                 <TeamNameList names={this.state.teams} clickEventHandler={this.updateChoiceCount.bind(this)}/>
               </Panel>
             </Col>

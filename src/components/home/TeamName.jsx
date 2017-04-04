@@ -32,7 +32,7 @@ export default (props) => {
             </Col>
 
             <Col xs={3} lg={3} lgOffset={0}>
-              <div>{props.teamName}</div>
+              <h2>{props.teamName}</h2>
               <img src={props.logoURL} alt="Team Logo Missing" style={{width:'250px'}}/>
             </Col>
 

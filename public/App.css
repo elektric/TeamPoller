@@ -5,6 +5,14 @@
 
 }
 
+.AppLeft {
+  text-align: left;
+}
+
+.AppRight {
+  text-align: right;
+}
+
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
@@ -23,7 +31,8 @@
 }
 
 .voteHeader {
-  color: rgba(123, 18, 229, 1);
+  text-align: center;
+  color: rgba(200, 18, 255, 1);
 }
 
 .App-intro {
