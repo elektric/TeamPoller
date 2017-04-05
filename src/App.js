@@ -11,7 +11,7 @@ var config = require('../secure/config.json');
 
 
 defaults.global.defaultFontColor = 'rgba(255, 255, 255, .8)';
-defaults.global.defaultFontSize = 18;
+defaults.global.defaultFontSize = 14;
 const fb = firebase
   .initializeApp(config)
   .database()
@@ -45,7 +45,7 @@ class App extends Component {
           },
           options: {
             maintainAspectRatio: true,
-            response: true,
+            responsive: true,
             legend: {
               display: false
             },
@@ -137,8 +137,6 @@ class App extends Component {
                <h2 className="voteHeader">Votes for Team Name</h2>
                <Bar
                  data={this.state.data}
-                 width={800}
-                 height={350}
                  options={this.state.options}
                />
              </div>
